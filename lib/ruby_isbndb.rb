@@ -37,6 +37,13 @@ module ISBNdb
       return ISBNdb::ResultSet.new(uri, singularize(collection).capitalize)
     end
     
+    def stats
+      uri = "#{BASE_URL}/books.xml?access_key=#{@access_key}&results=keystats"
+      stats = {}
+      LibXML::XML::Parser.file(uri).parse.find('KeyStats').first.attributes.each { |attribute| stats[attribute.name.to_sym] = attribute.value.to_i unless attribute.name == 'access_key' }
+      return stats
+    end
+    
     def method_missing(m, *args, &block)
       m = m.to_s.downcase
       

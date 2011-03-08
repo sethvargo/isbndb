@@ -14,14 +14,17 @@ module ISBNdb
       @results.each &block
     end
     
+    def go_to_page(page)
+      return nil if page < 1 || page > @total_pages
+      ISBNdb::ResultSet.new("#{@uri}&page_number=#{page}", @collection, page)
+    end
+    
     def next_page
-      return nil if @current_page >= @total_pages
-      ISBNdb::ResultSet.new("#{@uri}&page_number=#{@current_page+1}", @collection, @current_page+1)
+      go_to_page(@current_page+1)
     end
     
     def prev_page
-      return nil if @current_page <= 1
-      ISBNdb::ResultSet.new("#{@uri}&page_number=#{@current_page-1}", @collection, @current_page-1)
+     go_to_page(@current_page-1)
     end
     
     def to_s

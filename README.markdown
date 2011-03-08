@@ -66,7 +66,7 @@ because Amazon's ISBNdb.com API is generally inconsistent with respect to return
 
 Pagination
 ----------
-Ruby ISBNdb now include pagination! Pagination is based on the `ResultSet` object. The `ResultSet` object contains the methods `next_page` and `prev_page`... Their function should not require too much explanation. Here's a basic example:
+Ruby ISBNdb now include pagination! Pagination is based on the `ResultSet` object. The `ResultSet` object contains the methods `go_to_page`, `next_page`, and `prev_page`... Their function should not require too much explanation. Here's a basic example:
 
     results = @query.find_books_by_title("ruby")
     results.next_page.each do |result|
@@ -86,13 +86,26 @@ A more realistic example - getting **all** books of a certain title:
     
 It seems incredibly unlikely that a developer would ever use `prev_page`, but it's still there if you need it.
 
-**Note**: `next_page` and `prev_page` return `nil` if the `ResultSet` is out of `Result` objects. If you try something like `results.next_page.next_page`, you could get a whiny nil. Think `LinkedLists` when working with `next_page` and `prev_page`.
+Because there may be cases where a developer may need a specific page, the `go_to_page` method also exists. Consider an example where you batch-process books into your own database (which is probably against Copyright laws, but you don't seem to care...):
 
-**BIGGER NOTE**: `next_page` and `prev_page` BOTH make a subsequent call to the API, using up one of your 500 daily request limits. Please keep this in mind!
+  results = @query.find_books_by_title("ruby")
+  results = results.go_to_page(50) # where 50 is the page number you want
+
+**Note**: `go_to_page`, `next_page` and `prev_page` return `nil` if the `ResultSet` is out of `Result` objects. If you try something like `results.next_page.next_page`, you could get a whiny nil. Think `LinkedLists` when working with `go_to_page`, `next_page` and `prev_page`.
+
+**BIGGER NOTE**: `go_to_page`, `next_page` and `prev_page` BOTH make a subsequent call to the API, using up one of your 500 daily request limits. Please keep this in mind!
+
+Statistics
+----------
+Ruby ISBNdb now supports basic statistics (from the server):
+
+    @query.stats # => {:requests => 50, :granted => 49}
+    @query.stats[:granted] # => 49
+    
+**Note**: Ironically, this information also comes from the server, so it counts as a request...
 
 Know Bugs and Limitations
 ---------
 - Result sets that return multiple sub-lists (like prices, pricehistory, and authors) are only populated with the *last* result
-- The gem doesn't warn you if you are near/go over 500 requests per day (which is the limit unless you buy a plan)
-- The system is severely lacking in tests, because I just never wrote them... Takers?
+- The gem doesn't warn you if you are near/go over 500 requests per day
 - Minimal support for multiple API-keys (manual management)
