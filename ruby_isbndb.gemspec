@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby_isbndb}
-  s.version = "1.1.1"
+  s.version = "1.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Seth Vargo"]
@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/ruby_isbndb.rb",
+    "lib/ruby_isbndb/access_key_set.rb",
+    "lib/ruby_isbndb/exceptions.rb",
     "lib/ruby_isbndb/result.rb",
     "lib/ruby_isbndb/result_set.rb",
     "ruby_isbndb.gemspec",
