@@ -43,10 +43,56 @@ Options for `:collection` include **books**, **subjects**, **categories**, **aut
 		
 If you are unfamiliar with some of these options, have a look at the [ISBNdb API](http://isbndb.com/docs/api/)
 
+Processing Results
+------------------
+A `ResultSet` is nothing more than an enhanced array of `Result` objects. The easiest way to process results from ruby_isbndb is most easily done using the `.each` method.
+
+    results = @query.find_books_by_title("Agile Development")
+    results.each do |result|
+      puts "title: #{result.title}"
+      puts "isbn10: #{result.isbn}"
+      puts "authors: #{result.authors_text}"
+    end
+    
+**Note** calling a method on a `Result` object that is `empty?`, `blank?`, or `nil?` will *always* return `nil`. This was a calculated decision so that developers can do the following:
+
+  puts "title: #{result.title}" unless result.title.nil?
+  
+versus
+
+  puts "title: #{result.title}" unless result.title.nil? || result.title.blank? || result.title.empty?
+
+because Amazon's ISBNdb.com API is generally inconsistent with respect to returning empty strings, whitespace characters, or nothing at all.
+
+Pagination
+----------
+Ruby ISBNdb now include pagination! Pagination is based on the `ResultSet` object. The `ResultSet` object contains the methods `next_page` and `prev_page`... Their function should not require too much explanation. Here's a basic example:
+
+    results = @query.find_books_by_title("ruby")
+    results.next_page.each do |result|
+      puts "title: #{result.title}"
+    end
+    
+A more realistic example - getting **all** books of a certain title:
+
+    results = @query.find_books_by_title("ruby")
+    while results
+      results.each do |result|
+        puts "title: #{title}"
+      end
+      
+      results = results.next_page
+    end
+    
+It seems incredibly unlikely that a developer would ever use `prev_page`, but it's still there if you need it.
+
+**Note**: `next_page` and `prev_page` return `nil` if the `ResultSet` is out of `Result` objects. If you try something like `results.next_page.next_page`, you could get a whiny nil. Think `LinkedLists` when working with `next_page` and `prev_page`.
+
+**BIGGER NOTE**: `next_page` and `prev_page` BOTH make a subsequent call to the API, using up one of your 500 daily request limits. Please keep this in mind!
+
 Know Bugs and Limitations
 ---------
 - Result sets that return multiple sub-lists (like prices, pricehistory, and authors) are only populated with the *last* result
 - The gem doesn't warn you if you are near/go over 500 requests per day (which is the limit unless you buy a plan)
-- Pagination currently does not exist
 - The system is severely lacking in tests, because I just never wrote them... Takers?
 - Minimal support for multiple API-keys (manual management)

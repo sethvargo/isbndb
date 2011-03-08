@@ -17,8 +17,12 @@ module ISBNdb
       end
     end
     
-    def method_missing
+    def method_missing(m, *args, &block)
       nil
+    end
+    
+    def to_s
+      "#<Result>"
     end
     
     private

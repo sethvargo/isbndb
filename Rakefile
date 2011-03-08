@@ -19,7 +19,6 @@ Jeweler::Tasks.new do |gem|
   gem.description = "Ruby ISBNdb is a amazingly fast and accurate gem that reads Amazon's ISBNdb XML API and gives you incredible flexibilty with the results! The gem uses libxml-ruby, the fastest XML parser for Ruby, so you get blazing fast results every time. Additionally, the newest version of the gem also features caching, so developers minimize API-key usage."
   gem.email = "svargo@cmu.edu"
   gem.authors = ["Seth Vargo"]
-  gem.add_runtime_dependency 'libxml-ruby', '>= 1.1.4'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
