@@ -15,14 +15,11 @@ Jeweler::Tasks.new do |gem|
   gem.name = "ruby_isbndb"
   gem.homepage = "http://github.com/svargo/ruby_isbndb"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "This gem provides an easy solution for connecting to Amazon's ISBNdb API"
+  gem.description = "Ruby ISBNdb is a amazingly fast and accurate gem that reads Amazon's ISBNdb XML API and gives you incredible flexibilty with the results! The gem uses libxml-ruby, the fastest XML parser for Ruby, so you get blazing fast results every time. Additionally, the newest version of the gem also features caching, so developers minimize API-key usage."
   gem.email = "svargo@cmu.edu"
   gem.authors = ["Seth Vargo"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.add_runtime_dependency 'libxml-ruby', '>= 1.1.4'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
