@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby_isbndb}
-  s.version = "1.1.0"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Seth Vargo"]
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
     "lib/ruby_isbndb/result_set.rb",
     "ruby_isbndb.gemspec",
     "test/helper.rb",
-    "test/test_books.rb"
+    "test/test_ruby_isbndb.rb"
   ]
   s.homepage = %q{http://github.com/svargo/ruby_isbndb}
   s.licenses = ["MIT"]
@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.summary = %q{This gem provides an easy solution for connecting to Amazon's ISBNdb API}
   s.test_files = [
     "test/helper.rb",
-    "test/test_books.rb"
+    "test/test_ruby_isbndb.rb"
   ]
 
   if s.respond_to? :specification_version then
