@@ -61,11 +61,11 @@ A `ResultSet` is nothing more than an enhanced array of `Result` objects. The ea
     
 **Note**: calling a method on a `Result` object that is `empty?`, `blank?`, or `nil?` will *always* return `nil`. This was a calculated decision so that developers can do the following:
 
-  puts "title: #{result.title}" unless result.title.nil?
+    puts "title: #{result.title}" unless result.title.nil?
   
 versus
 
-  puts "title: #{result.title}" unless result.title.nil? || result.title.blank? || result.title.empty?
+    puts "title: #{result.title}" unless result.title.nil? || result.title.blank? || result.title.empty?
 
 because Amazon's ISBNdb.com API is generally inconsistent with respect to returning empty strings, whitespace characters, or nothing at all.
 
@@ -95,8 +95,8 @@ It seems incredibly unlikely that a developer would ever use `prev_page`, but it
 
 Because there may be cases where a developer may need a specific page, the `go_to_page` method also exists. Consider an example where you batch-process books into your own database (which is probably against Copyright laws, but you don't seem to care...):
 
-  results = @query.find_books_by_title("ruby")
-  results = results.go_to_page(50) # where 50 is the page number you want
+    results = @query.find_books_by_title("ruby")
+    results = results.go_to_page(50) # where 50 is the page number you want
 
 **Note**: `go_to_page`, `next_page` and `prev_page` return `nil` if the `ResultSet` is out of `Result` objects. If you try something like `results.next_page.next_page`, you could get a whiny nil. Think `LinkedLists` when working with `go_to_page`, `next_page` and `prev_page`.
 
@@ -153,8 +153,6 @@ Here is a real-life example of how to use Ruby ISBNdb. Imagine a Rails applicati
         end
       end
     end
-
-
 
     # similar.html.erb
     <h1>The following books are recommeded for you:</h1>
