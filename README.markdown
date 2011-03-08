@@ -2,28 +2,35 @@ Ruby ISBNdb
 ===========
 About
 -----
-
 Ruby ISBNdb is a simple, Ruby library that connects to [Amazon's ISBNdb Web Service](http://isbndb.com) and API. Ruby ISBNdb is written to mimic the ease of ActiveRecord and other ORM programs, without all the added hassles. It's still in beta phases, but it is almost fully functional for the basic search features of ISBNdb.
 
 Why it's awesome
 ----------------
+Ruby ISBNdb now uses [libxml-ruby](http://libxml.rubyforge.org/) - the fastest Ruby parser available for XML. Other parsers rely on REXML or hpricot, which are [show to be significantly slower](http://railstips.org/blog/archives/2008/08/11/parsing-xml-with-ruby/). libxml has been shown to have the fastest HTTP request AND fastest XML-parser to date!
 
-Ruby ISBNdb now uses [libxml-ruby](http://libxml.rubyforge.org/) - the fastest Ruby parser available for XML. Other parsers rely on REXML or hpricot, which are [show to be significantly slower](http://railstips.org/blog/archives/2008/08/11/parsing-xml-with-ruby/).
+Instead of dealing with complicated hashes and arrays, Ruby ISBNdb populates a `ResultSet` filled with `Result` objects that behave as one would expect. Simply call `@book.title` or `@author.name`! Once a `Result` object is built, it's persistent too! That means that the XML-DOM returned by Amazon's ISBNdb is parsed exactly once for each request, instead of every method call like similar versions of this gem.
+
+Version 1.5.0 now supports API-key management! The new APIKeySet supports auto-rollover - whenever one key is used up, it will automatically try the next key in the set. Once it runs out of keys, it will raise an ISBNdb::AccessKeyError. See the docs below for sample usage!
+
+Ruby ISBNdb is under active development! More features will be coming soon!
 
 Installation
 ------------
-
 Finally got it packaged as a gem!
 
     gem install ruby_isbndb
 
-Alternatively, you can download the source from here and `require 'lib/isbndb'`
+Alternatively, you can download the source from here and `require 'lib/ruby_isbndb'`
+
+Basic Setup
+-----------
+Simply create a query instance variable and you're on your way:
+
+    @query = ISBNdb::Query.new(["API-KEY-1", "API-KEY-2", "API-KEY-3"]) # will auto-rollover to API-KEY-2 when API-KEY-1 meets max requests
 
 ActiveRecord-like Usage
 -----------------------
 Another reason why you'll love Ruby ISBNdb is it's similarity to ActiveRecord. In fact, it's *based* on ActiveRecord, so it should look similar. It's best to lead by example, so here are a few ways to search for books, authors, etc:
-
-    @query = ISBNdb::Query.new("YOUR API KEY HERE")
 
     @query.find_book_by_isbn("978-0-9776-1663-3")
     @query.find_books_by_title("Agile Development")
@@ -34,8 +41,6 @@ Advanced Usage
 --------------
 Additionally, you can also use a more advanced syntax for complete control:
 
-    @query = ISBNdb::Query.new("YOUR API KEY HERE")
-
     @query.find(:collection => 'books', :where => { :isbn => '978-0-9776-1663-3' })
     @query.find(:collection => 'books', :where => { :author => 'Seth Vargo' }, :results => 'prices')
     
@@ -45,7 +50,7 @@ If you are unfamiliar with some of these options, have a look at the [ISBNdb API
 
 Processing Results
 ------------------
-A `ResultSet` is nothing more than an enhanced array of `Result` objects. The easiest way to process results from ruby_isbndb is most easily done using the `.each` method.
+A `ResultSet` is nothing more than an enhanced array of `Result` objects. The easiest way to process results from Ruby ISBNdb is most easily done using the `.each` method.
 
     results = @query.find_books_by_title("Agile Development")
     results.each do |result|
@@ -54,7 +59,7 @@ A `ResultSet` is nothing more than an enhanced array of `Result` objects. The ea
       puts "authors: #{result.authors_text}"
     end
     
-**Note** calling a method on a `Result` object that is `empty?`, `blank?`, or `nil?` will *always* return `nil`. This was a calculated decision so that developers can do the following:
+**Note**: calling a method on a `Result` object that is `empty?`, `blank?`, or `nil?` will *always* return `nil`. This was a calculated decision so that developers can do the following:
 
   puts "title: #{result.title}" unless result.title.nil?
   
@@ -63,6 +68,8 @@ versus
   puts "title: #{result.title}" unless result.title.nil? || result.title.blank? || result.title.empty?
 
 because Amazon's ISBNdb.com API is generally inconsistent with respect to returning empty strings, whitespace characters, or nothing at all.
+
+**Note**: XML-keys to method names are inversely mapped. CamelCased XML keys and attributes (like BookData or TitleLong) are converted to lowercase under_scored methods (like book_data or title_long). ALL XML keys and attributes are mapped in this way.
 
 Pagination
 ----------
@@ -95,17 +102,69 @@ Because there may be cases where a developer may need a specific page, the `go_t
 
 **BIGGER NOTE**: `go_to_page`, `next_page` and `prev_page` BOTH make a subsequent call to the API, using up one of your 500 daily request limits. Please keep this in mind!
 
+Advanced Key Management
+-----------------------
+With version 1.5.0, a new AccessKeySet allows for easy key management! It's controlled through the main @query.
+
+    @access_key_set = @query.access_key_set
+
+    @access_key_set.current_key                 # gets the current key
+    @access_key_set.next_key                    # gets the next key
+    @access_key_set.next_key!                   # advance the pointer (equivalent to @access_key_set.current_key = @access_key_set.next_key)
+    @access_key_set.prev_key                    # gets the previous key
+    @access_key_set.prev_key!                   # advance the pointer (equivalent to @access_key_set.current_key = @access_key_set.prev_key)
+    @access_key_set.use_key('abc123foobar')     # use and existing key (or add it if doesn't exist)
+
+All methods will return `nil` (except `use_key`) whenever the key does not exist.
+
 Statistics
 ----------
 Ruby ISBNdb now supports basic statistics (from the server):
 
-    @query.stats # => {:requests => 50, :granted => 49}
-    @query.stats[:granted] # => 49
+    @query.keystats # => {:requests => 50, :granted => 49}
+    @query.keystats[:granted] # => 49
     
 **Note**: Ironically, this information also comes from the server, so it counts as a request...
+
+Exceptions
+----------
+Ruby ISBNdb could raise the following possible exceptions:
+
+    ISBNdb::AccessKeyError
+    ISBNdb::InvalidURIError
+    
+You will most likely encounter `ISBNdb::AccessKeyError` when you have reached your 500-request daily limit. `ISBNdb::InvalidURIError` usually occurs when using magic finder methods with typographical errors.
+
+A Real-Life Example
+-------------------
+Here is a real-life example of how to use Ruby ISBNdb. Imagine a Rails application that recommends books. You have written a model, `Book`, that has a variety of methods. One of those class methods, `similar`, returns a list of book isbn values that are similar to the current book. Here's how one may do that:
+
+    # books_controller.rb
+    def simliar
+      @book = Book.find(params[:id])
+      @query = ISBNdb::Query.new(['API-KEY-1', 'API-KEY-2'])
+      @isbns = @book.similar # returns an array like [1234567890, 0987654321, 3729402827...]
+      
+      @isbns.each do |isbn|
+        begin
+          (@books ||= []) << @query.find_book_by_isbn(isbn).first
+        rescue ISBNdb::AccessKeyError
+          SomeMailer.send_limit_email.deliver!
+        end
+      end
+    end
+
+
+
+    # similar.html.erb
+    <h1>The following books are recommeded for you:</h1>
+    <% @books.each do |book| %>
+      <div class="book">
+        <h2><%= book.title_long %></h2>
+        <p><strong>authors</strong>: <%= book.authors_text %></p>
+      </div>
+    <% end %>
 
 Know Bugs and Limitations
 ---------
 - Result sets that return multiple sub-lists (like prices, pricehistory, and authors) are only populated with the *last* result
-- The gem doesn't warn you if you are near/go over 500 requests per day
-- Minimal support for multiple API-keys (manual management)

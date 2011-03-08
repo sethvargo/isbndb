@@ -1,10 +1,35 @@
 module ISBNdb
+  
   private
+  # The Result object is a true testament of metaprogramming. Almost every method of the Result
+  # is dynamically generated through the build_result() method. All attribtues of the XML are
+  # parsed, translated, and populated as instance methods on the Result object. This allows for
+  # easy Ruby-like access (@book.title), without hardcoding every single possible return value
+  # from the ISBNdb API
   class Result
+    # Initialize simply calls build_result. Because the method definition is recusive, it must
+    # be moved into a separate helper.
     def initialize(top_node)
       build_result(top_node)
     end
     
+    # Because a result may or may not contain a specified key, we always return nil for 
+    # consistency. This allows developers to easily check for .nil? instead of checking for
+    # a miriad of exceptions throughout their code.
+    def method_missing(m, *args, &block)
+      nil
+    end
+    
+    # Pretty preint the Result including the number of singleton methods that exist. If
+    # you want the ACTUAL singleton methods, call @result.singleton_methods.
+    def to_s
+      "#<Result @singleton_methods=#{@singleton_methods.size}>"
+    end
+    
+    private
+    # This is the `magical` method. It essentially parses each attribute of the XML as well as
+    # the content of each XML node, dynamically sends a method to the instance with that attribute's
+    # or content's value. Not to be outdone, it recursively iterates over all children too!
     def build_result(top_node)
       top_node.attributes.each do |attribute|
         singleton.send(:define_method, formatted_method_name(attribute.name)) { attribute.value } unless attribute.value.strip.empty?
@@ -17,23 +42,21 @@ module ISBNdb
       end
     end
     
-    def method_missing(m, *args, &block)
-      nil
-    end
-    
-    def to_s
-      "#<Result>"
-    end
-    
-    private
+    # This helper function reduces code redundancy and maintains consistency by formatting
+    # all method names the same. All method names are stripped of any trailing whitespaces,
+    # converted from CamelCase to under_score, and converted to a symbol 
     def formatted_method_name(name)
       camel_to_underscore(name.strip).to_sym
     end
     
+    # This helper function converts CamelCase to under_score using a nice little regex :).
     def camel_to_underscore(str)
       str.gsub(/(.)([A-Z])/,'\1_\2').downcase
     end
     
+    # We need a singleton reference to the current _instance_ so that we can dynamically define
+    # methods. This is just a simple helper that returns the singleton class of the current
+    # object instance.
     def singleton
       class << self; self end
     end
