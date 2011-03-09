@@ -50,9 +50,9 @@ module ISBNdb
     # as a request to the server, so use with caution.
     def keystats
       uri = "#{BASE_URL}/books.xml?access_key=#{@access_key_set.current_key}&results=keystats"
-      stats = {}
-      LibXML::XML::Parser.file(uri).parse.find('KeyStats').first.attributes.each { |attribute| stats[attribute.name.to_sym] = attribute.value.to_i unless attribute.name == 'access_key' }
-      return stats
+      keystats = {}
+      LibXML::XML::Parser.file(uri).parse.find('KeyStats').first.attributes.each { |attribute| keystats[attribute.name.to_sym] = attribute.value.to_i unless attribute.name == 'access_key' }
+      return keystats
     end
     
     # Method missing allows for dynamic finders, similar to that of ActiveRecord. See
