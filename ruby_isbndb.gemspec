@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby_isbndb}
-  s.version = "1.5.0"
+  s.version = "1.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Seth Vargo"]
-  s.date = %q{2011-03-08}
+  s.date = %q{2011-03-09}
   s.description = %q{Ruby ISBNdb is a amazingly fast and accurate gem that reads Amazon's ISBNdb XML API and gives you incredible flexibilty with the results! The gem uses libxml-ruby, the fastest XML parser for Ruby, so you get blazing fast results every time. Additionally, the newest version of the gem also features caching, so developers minimize API-key usage.}
   s.email = %q{svargo@cmu.edu}
   s.extra_rdoc_files = [
