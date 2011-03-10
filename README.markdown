@@ -2,13 +2,13 @@ Ruby ISBNdb
 ===========
 About
 -----
-Ruby ISBNdb is a simple, Ruby library that connects to [Amazon's ISBNdb Web Service](http://isbndb.com) and API. Ruby ISBNdb is written to mimic the ease of ActiveRecord and other ORM programs, without all the added hassles. It's still in beta phases, but it is almost fully functional for the basic search features of ISBNdb.
+Ruby ISBNdb is a simple, Ruby library that connects to [ISBNdb.com's Web Service](http://isbndb.com) and API. Ruby ISBNdb is written to mimic the ease of ActiveRecord and other ORM programs, without all the added hassles. It's still in beta phases, but it is almost fully functional for the basic search features of ISBNdb.
 
 Why it's awesome
 ----------------
 Ruby ISBNdb now uses [libxml-ruby](http://libxml.rubyforge.org/) - the fastest Ruby parser available for XML. Other parsers rely on REXML or hpricot, which are [show to be significantly slower](http://railstips.org/blog/archives/2008/08/11/parsing-xml-with-ruby/). libxml has been shown to have the fastest HTTP request AND fastest XML-parser to date!
 
-Instead of dealing with complicated hashes and arrays, Ruby ISBNdb populates a `ResultSet` filled with `Result` objects that behave as one would expect. Simply call `@book.title` or `@author.name`! Once a `Result` object is built, it's persistent too! That means that the XML-DOM returned by Amazon's ISBNdb is parsed exactly once for each request, instead of every method call like similar versions of this gem.
+Instead of dealing with complicated hashes and arrays, Ruby ISBNdb populates a `ResultSet` filled with `Result` objects that behave as one would expect. Simply call `@book.title` or `@author.name`! Once a `Result` object is built, it's persistent too! That means that the XML-DOM returned by ISBNdb is parsed exactly once for each request, instead of every method call like similar versions of this gem.
 
 Version 1.5.0 now supports API-key management! The new APIKeySet supports auto-rollover - whenever one key is used up, it will automatically try the next key in the set. Once it runs out of keys, it will raise an ISBNdb::AccessKeyError. See the docs below for sample usage!
 
@@ -67,7 +67,7 @@ versus
 
     puts "title: #{result.title}" unless result.title.nil? || result.title.blank? || result.title.empty?
 
-because Amazon's ISBNdb.com API is generally inconsistent with respect to returning empty strings, whitespace characters, or nothing at all.
+because ISBNdb.com API is generally inconsistent with respect to returning empty strings, whitespace characters, or nothing at all.
 
 **Note**: XML-keys to method names are inversely mapped. CamelCased XML keys and attributes (like BookData or TitleLong) are converted to lowercase under_scored methods (like book_data or title_long). ALL XML keys and attributes are mapped in this way.
 
