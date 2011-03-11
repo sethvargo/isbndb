@@ -25,7 +25,8 @@ Alternatively, you can download the source from here and `require 'lib/isbndb'`
 **Special Thanks** to:
 
 &nbsp;&nbsp;[Terje Tjervaag](https://github.com/terje)
-&nbsp;&nbsp;[http://thedailyt.com][http://thedailyt.com]
+
+&nbsp;&nbsp;http://thedailyt.com
 
 for giving up the `isbndb` gem! Thank you!
 
