@@ -18,9 +18,16 @@ Installation
 ------------
 Finally got it packaged as a gem!
 
-    gem install ruby_isbndb
+    gem install isbndb
 
-Alternatively, you can download the source from here and `require 'lib/ruby_isbndb'`
+Alternatively, you can download the source from here and `require 'lib/isbndb'`
+
+**Special Thanks** to:
+
+&nbsp;&nbsp;[Terje Tjervaag](https://github.com/terje)
+&nbsp;&nbsp;[http://thedailyt.com][http://thedailyt.com]
+
+for giving up the `isbndb` gem! Thank you!
 
 Basic Setup
 -----------
@@ -164,5 +171,9 @@ Here is a real-life example of how to use Ruby ISBNdb. Imagine a Rails applicati
     <% end %>
 
 Know Bugs and Limitations
----------
+-------------------------
 - Result sets that return multiple sub-lists (like prices, pricehistory, and authors) are only populated with the *last* result
+
+Change Log
+----------
+2011-3-11 - Officially changed from ruby_isbndb to isbndb with special thanks to [Terje Tjervaag](https://github.com/terje) for giving up the gem name :)
