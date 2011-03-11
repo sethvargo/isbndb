@@ -33,7 +33,8 @@ Basic Setup
 -----------
 Simply create a query instance variable and you're on your way:
 
-    @query = ISBNdb::Query.new(["API-KEY-1", "API-KEY-2", "API-KEY-3"]) # will auto-rollover to API-KEY-2 when API-KEY-1 meets max requests
+    # will auto-rollover to API-KEY-2 when API-KEY-1 meets max requests
+    @query = ISBNdb::Query.new(["API-KEY-1", "API-KEY-2", "API-KEY-3"])
 
 ActiveRecord-like Usage
 -----------------------
