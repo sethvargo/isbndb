@@ -23,7 +23,8 @@ module ISBNdb
     # Pretty preint the Result including the number of singleton methods that exist. If
     # you want the ACTUAL singleton methods, call @result.singleton_methods.
     def to_s
-      "#<Result @singleton_methods=#{@singleton_methods.size}>"
+      @singleton_methods ||= []
+      "#<Result @num_singleton_methods=#{@singleton_methods.size}>"
     end
     
     private
@@ -32,26 +33,21 @@ module ISBNdb
     # or content's value. Not to be outdone, it recursively iterates over all children too!
     def build_result(top_node)
       top_node.attributes.each do |attribute|
-        singleton.send(:define_method, formatted_method_name(attribute.name)) { attribute.value } unless attribute.value.strip.empty?
+        singleton.send(:define_method, method_name(attribute.name)) { attribute.value } unless attribute.value.strip.empty?
       end
       
       if top_node.children?
         top_node.children.each { |child| build_result(child) }
       else
-        singleton.send(:define_method, formatted_method_name(top_node.parent.name)) { top_node.content.strip.chomp(',') } unless top_node.content.strip.empty?
+        singleton.send(:define_method, method_name(top_node.parent.name)) { top_node.content.strip.chomp(',') } unless top_node.content.strip.empty?
       end
     end
     
     # This helper function reduces code redundancy and maintains consistency by formatting
     # all method names the same. All method names are stripped of any trailing whitespaces,
     # converted from CamelCase to under_score, and converted to a symbol 
-    def formatted_method_name(name)
-      camel_to_underscore(name.strip).to_sym
-    end
-    
-    # This helper function converts CamelCase to under_score using a nice little regex :).
-    def camel_to_underscore(str)
-      str.gsub(/(.)([A-Z])/,'\1_\2').downcase
+    def method_name(name)
+      name.strip.underscore.to_sym
     end
     
     # We need a singleton reference to the current _instance_ so that we can dynamically define

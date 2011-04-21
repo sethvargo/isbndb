@@ -1,7 +1,9 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    activesupport (3.0.5)
     git (1.2.5)
+    i18n (0.5.0)
     jeweler (1.5.2)
       bundler (~> 1.0.0)
       git (>= 1.2.5)
@@ -15,8 +17,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.0.0)
-  jeweler (~> 1.5.2)
+  activesupport
+  bundler
+  i18n
+  jeweler
   libxml-ruby (>= 1.1.4)
   rcov
   shoulda

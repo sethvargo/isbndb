@@ -1,5 +1,6 @@
 # require dependencies
 require 'libxml'
+require 'active_support/inflector'
 
 # private sub-classes
 require 'isbndb/access_key_set'
@@ -62,7 +63,7 @@ module ISBNdb
       
       if m.match(/find_(.+)_by_(.+)/)
         split = m.split('_', 4)
-        collection, search_strs = pluralize(split[1].downcase), [split.last]
+        collection, search_strs = split[1].downcase.pluralize, [split.last]
         
         # check and see if we are searching multiple fields
         search_strs = search_strs.first.split('_and_') if(search_strs.first.match(/_and_/))
@@ -91,7 +92,7 @@ module ISBNdb
     def make_request(collection, results, searches)
       begin
         uri = "#{BASE_URL}/#{collection}.xml?access_key=#{@access_key_set.current_key}&results=#{results.join(',')}&#{searches.join('&')}"
-        ISBNdb::ResultSet.new(uri, singularize(collection).capitalize)
+        ISBNdb::ResultSet.new(uri, collection.singularize.capitalize)
       rescue ISBNdb::AccessKeyError
         puts "Access Key Error (#{@access_key_set.current_key}) - You probably reached your limit! Trying the next key."
         @access_key_set.next_key!
@@ -99,17 +100,17 @@ module ISBNdb
         raise ISBNdb::AccessKeyError
       end
     end
-    
-    def pluralize(str)
-      return 'categories' if str == 'category'
-      return "#{str}s" unless str.split(//).last == 's'
-      str
-    end
-    
-    def singularize(str)
-      return 'category' if str == 'categories'
-      return str[0, str.length-1] if str.split(//).last == 's'
-      str
-    end
+  end
+end
+
+
+# Add a few methods to the String class
+class String
+  def is_plural?
+    self.downcase.pluralize == self.downcase 
+  end
+  
+  def is_singular?
+    !self.is_plural?
   end
 end
