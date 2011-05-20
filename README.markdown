@@ -170,6 +170,10 @@ Here is a real-life example of how to use Ruby ISBNdb. Imagine a Rails applicati
         <p><strong>authors</strong>: <%= book.authors_text %></p>
       </div>
     <% end %>
+    
+Testing
+-------
+[![Build Status](http://travis-ci.org/sethvargo/isbndb.png)](http://travis-ci.org/sethvargo/isbndb)
 
 Know Bugs and Limitations
 -------------------------
