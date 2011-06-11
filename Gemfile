@@ -2,6 +2,8 @@ source "http://rubygems.org"
 
 gem 'activesupport'
 gem 'i18n'
+gem 'rake'
+gem 'rdoc'
 gem 'libxml-ruby', '>= 1.1.4'
 
 # Include everything needed to run rake, tests, features, etc.
