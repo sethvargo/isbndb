@@ -73,7 +73,10 @@ module ISBNdb
     # each child. This method works because the API always returns #{@collection}List followed by a subset
     # of #{@collection}Data. These results are all pushed into the @results array for accessing.
     def build_results
-      @xml.find("#{@collection}List/#{@collection}Data").collect { |node| (@results ||= []) << Result.new(node) }
+      @results = []
+      list =  @xml.find("#{@collection}List/#{@collection}Data")
+      return [nil] if list.empty?
+      list.collect { |node| @results << Result.new(node) }
     end
     
     # This helper method is mainly designed for use with the go_to_page(page) method. It parses the XML
