@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2012-06-16T20:36:49Z">
+<CategoryList total_results="99" page_size="10" page_number="1" shown_results="10">
+<CategoryData category_id="society.religion.christianity.denominations.catholicism.literature.fiction" parent_id="society.religion.christianity.denominations.catholicism.literature">
+<Name>Fiction</Name>
+<Details summary="" depth="6" element_count="30" />
+</CategoryData>
+<CategoryData category_id="society.religion.christianity.denominations.catholicism.clergy.fiction" parent_id="society.religion.christianity.denominations.catholicism.clergy">
+<Name>Fiction</Name>
+<Details summary="" depth="6" element_count="16" />
+</CategoryData>
+<CategoryData category_id="society.family.family_members.fathers.single_and_divorced.fiction" parent_id="society.family.family_members.fathers.single_and_divorced">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="7" />
+</CategoryData>
+<CategoryData category_id="society.family.family_members.mothers.single_and_divorced.fiction" parent_id="society.family.family_members.mothers.single_and_divorced">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="25" />
+</CategoryData>
+<CategoryData category_id="society.family.family_members.mothers.working_mothers.fiction" parent_id="society.family.family_members.mothers.working_mothers">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="6" />
+</CategoryData>
+<CategoryData category_id="society.family.family_members.mothers.teenage_mothers.fiction" parent_id="society.family.family_members.mothers.teenage_mothers">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="4" />
+</CategoryData>
+<CategoryData category_id="society.sexuality.homosexuality.lesbians.literature.fiction" parent_id="society.sexuality.homosexuality.lesbians.literature">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="24" />
+</CategoryData>
+<CategoryData category_id="arts.music.styles.jazz.musicians.fiction" parent_id="arts.music.styles.jazz.musicians">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="6" />
+</CategoryData>
+<CategoryData category_id="regions.france.history.famous_people.napoleon_i.fiction" parent_id="regions.france.history.famous_people.napoleon_i">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="4" />
+</CategoryData>
+<CategoryData category_id="science.biology.fields.genetics.literature.fiction" parent_id="science.biology.fields.genetics.literature">
+<Name>Fiction</Name>
+<Details summary="" depth="5" element_count="3" />
+</CategoryData>
+</CategoryList>
+</ISBNdb>

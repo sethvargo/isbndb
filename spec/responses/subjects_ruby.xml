@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2012-06-16T20:30:57Z">
+<SubjectList total_results="58" page_size="10" page_number="1" shown_results="10">
+<SubjectData subject_id="ruby_napdowe_eksploatacja_podrcznik_akademicki" book_count="1" marc_field="650" marc_indicator_1=" " marc_indicator_2="9">
+<Name>ruby akademicki</Name>
+</SubjectData>
+<SubjectData subject_id="bell_ruby" book_count="2" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Bell, Ruby</Name>
+</SubjectData>
+<SubjectData subject_id="bell_ruby_1942" book_count="2" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Bell, Ruby,1942</Name>
+</SubjectData>
+<SubjectData subject_id="braff_ruby_1927_2003" book_count="1" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Braff, Ruby,1927-2003</Name>
+</SubjectData>
+<SubjectData subject_id="bridges_ruby" book_count="4" marc_field="600" marc_indicator_1="1" marc_indicator_2="1">
+<Name>Bridges, Ruby</Name>
+</SubjectData>
+<SubjectData subject_id="bridges_ruby_comic_books_strips_etc" book_count="2" marc_field="600" marc_indicator_1="0" marc_indicator_2="0">
+<Name>Bridges, Ruby -- Comic books, strips, etc</Name>
+</SubjectData>
+<SubjectData subject_id="crane_ruby_fictitious_character_fiction" book_count="1" marc_field="650" marc_indicator_1=" " marc_indicator_2="0">
+<Name>Crane, Ruby (Fictitious character) -- Fiction</Name>
+</SubjectData>
+<SubjectData subject_id="cress_ruby_1911_correspondence" book_count="2" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Cress, Ruby,1911-Correspondence</Name>
+</SubjectData>
+<SubjectData subject_id="dee_ruby" book_count="7" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Dee, Ruby</Name>
+</SubjectData>
+<SubjectData subject_id="duncan_ruby" book_count="2" marc_field="600" marc_indicator_1="1" marc_indicator_2="0">
+<Name>Duncan, Ruby</Name>
+</SubjectData>
+</SubjectList>
+</ISBNdb>

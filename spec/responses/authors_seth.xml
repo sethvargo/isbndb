@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2012-06-16T20:26:27Z">
+<AuthorList total_results="401" page_size="10" page_number="1" shown_results="10">
+<AuthorData person_id="abraham_seth">
+<Name>Abraham, Seth</Name>
+<Details first_name="Seth" last_name="Abraham" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="abramson_seth_f">
+<Name>Abramson, Seth F.</Name>
+<Details first_name="Seth" last_name="Abramson" dates="1926-" has_books="1" />
+</AuthorData>
+<AuthorData person_id="adams_seth">
+<Name>Adams, Seth</Name>
+<Details first_name="Seth" last_name="Adams" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="seth_afikorah_danquah">
+<Name>Seth Afikorah-Danquah</Name>
+<Details first_name="Seth" last_name="Afikorah-Danquah" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="agata_seth_h">
+<Name>Agata, Seth H</Name>
+<Details first_name="Seth" last_name="Agata" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="agbo_seth_a">
+<Name>Agbo, Seth A.</Name>
+<Details first_name="Seth" last_name="Agbo" dates="1951-" has_books="1" />
+</AuthorData>
+<AuthorData person_id="allcorn_seth">
+<Name>Allcorn, Seth</Name>
+<Details first_name="Seth" last_name="Allcorn" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="ames_seth">
+<Name>Ames, Seth</Name>
+<Details first_name="Seth" last_name="Ames" dates="1805-1881." has_books="1" />
+</AuthorData>
+<AuthorData person_id="anderson_seth_b">
+<Name>Anderson, Seth B.</Name>
+<Details first_name="Seth" last_name="Anderson" dates="" has_books="1" />
+</AuthorData>
+<AuthorData person_id="seth_andrew_a01">
+<Name>Seth Andrew</Name>
+<Details first_name="Seth" last_name="Andrew" dates="" has_books="1" />
+</AuthorData>
+</AuthorList>
+</ISBNdb>

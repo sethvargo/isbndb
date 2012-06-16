@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2012-06-16T20:42:39Z">
+<PublisherList total_results="276" page_size="10" page_number="1" shown_results="10">
+<PublisherData publisher_id="taylor_francis_a01">
+<Name>: Taylor &amp; Francis</Name>
+<Details location="London [etc.]" />
+</PublisherData>
+<PublisherData publisher_id="a_a_balkema_taylor_francis">
+<Name>A.A. Balkema/Taylor &amp; Francis</Name>
+<Details location="Leiden, The Netherlands" />
+</PublisherData>
+<PublisherData publisher_id="albert_francis_perrin">
+<Name>Albert Francis Perrin</Name>
+<Details location="Ottawa" />
+</PublisherData>
+<PublisherData publisher_id="auerbach_publications_tayl_a02">
+<Name>Auerbach Publications, Taylor &amp; Francis Group</Name>
+<Details location="Boca Raton, FL" />
+</PublisherData>
+<PublisherData publisher_id="auerbach_publications_tayl_a01">
+<Name>Auerbach Publications/Taylor &amp; Francis</Name>
+<Details location="Boca Raton, FL" />
+</PublisherData>
+<PublisherData publisher_id="auerbach_publications_taylor_f">
+<Name>Auerbach Publications/Taylor &amp; Francis Group</Name>
+<Details location="Boca Raton, FL" />
+</PublisherData>
+<PublisherData publisher_id="auerbach_taylor_francis">
+<Name>Auerbach/Taylor&amp;Francis</Name>
+<Details location="Boca Raton" />
+</PublisherData>
+<PublisherData publisher_id="b_francis">
+<Name>B. Francis</Name>
+<Details location="[Coolangatta, Qld.]" />
+</PublisherData>
+<PublisherData publisher_id="balkema_taylor_francis">
+<Name>Balkema/Taylor &amp; Francis</Name>
+<Details location="[London]" />
+</PublisherData>
+<PublisherData publisher_id="beau_francis_press">
+<Name>Beau Francis Press</Name>
+<Details location="" />
+</PublisherData>
+</PublisherList>
+</ISBNdb>
