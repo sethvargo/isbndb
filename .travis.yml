@@ -2,4 +2,5 @@ language: ruby
 rvm:
   - 1.9.2
   - 1.9.3
+before_script: "cp config/isbndb.example.yml config/isbndb.yml"
 script: "bundle exec rake test:ci --trace"
