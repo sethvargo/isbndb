@@ -2,29 +2,39 @@ Ruby ISBNdb
 ===========
 Ruby ISBNdb is a simple, Ruby library that connects to [ISBNdb.com's Web Service](http://isbndb.com) and API. Ruby ISBNdb is written to mimic the ease of ActiveRecord and other ORM programs, without all the added hassles. It's still in beta phases, but it is almost fully functional for the basic search features of ISBNdb.
 
-Why it's awesome
-----------------
-Ruby ISBNdb uses one of the fastest Ruby parser available for XML. Other parsers rely on REXML or hpricot, which are [show to be significantly slower](http://railstips.org/blog/archives/2008/08/11/parsing-xml-with-ruby/).
-
-Instead of dealing with complicated hashes and arrays, Ruby ISBNdb populates a `ResultSet` filled with `Result` objects that behave as one would expect. Simply call `@book.title` or `@author.name`! Once a `Result` object is built, it's persistent too! That means that the XML-DOM returned by ISBNdb is parsed exactly once for each request, instead of every method call like similar versions of this gem.
-
-Version 1.5.0 now supports API-key management! The new `APIKeySet` supports auto-rollover - whenever one key is used up, it will automatically try the next key in the set. Once it runs out of keys, it will raise an `ISBNdb::AccessKeyError`. See the docs below for sample usage!
+Version 1.x
+-----------
+*ISBNdb 1.x.x has been deprecated!*. You should upgrade to the new version as soon as possible. The old documentation is still available in the [git history](https://github.com/sethvargo/isbndb/tree/75cfe76d096f92b2dfaf1c1b42d7c84ff86fcbc0). There are *significant* changes in this new version, so please test appropriately.
 
 Installation
 ------------
-Finally got it packaged as a gem!
+To get started, install the gem:
 
     gem install isbndb
 
-Alternatively, you can download the source from here and `require 'lib/isbndb'`
+Alternatively, you can add it to your Gemfile:
+
+```ruby
+gem 'isbndb', '~> 2.0.0'
+```
 
 Basic Setup
 -----------
-Simply create a query instance variable and you're on your way:
+To get started, you'll need to create a `config/isbndb.yml` file in your project root. It should look like this:
+
+```yml
+access_keys:
+  - KEY_1
+  - KEY_2
+  ...
+```
+
+Where you list your access keys. This was in response to security holes in version 1.x where values were passed directly to the initializer.
+
+Now you're ready to get started:
 
 ```ruby
-# will auto-rollover to API-KEY-2 when API-KEY-1 meets max requests
-@query = ISBNdb::Query.new(["API-KEY-1", "API-KEY-2", "API-KEY-3"])
+@query = ISBNdb::Query.find_book_by_name('Ruby')
 ```
 
 ActiveRecord-like Usage
@@ -32,10 +42,10 @@ ActiveRecord-like Usage
 Another reason why you'll love Ruby ISBNdb is it's similarity to ActiveRecord. In fact, it's *based* on ActiveRecord, so it should look similar. It's best to lead by example, so here are a few ways to search for books, authors, etc:
 
 ```ruby
-@query.find_book_by_isbn("978-0-9776-1663-3")
-@query.find_books_by_title("Agile Development")
-@query.find_author_by_name("Seth Vargo")
-@query.find_publisher_by_name("Pearson")
+ISBNdb::Query.find_book_by_isbn("978-0-9776-1663-3")
+ISBNdb::Query.find_books_by_title("Agile Development")
+ISBNdb::Query.find_author_by_name("Seth Vargo")
+ISBNdb::Query.find_publisher_by_name("Pearson")
 ```
 
 Advanced Usage
@@ -43,8 +53,8 @@ Advanced Usage
 Additionally, you can also use a more advanced syntax for complete control:
 
 ```ruby
-@query.find(:collection => 'books', :where => { :isbn => '978-0-9776-1663-3' })
-@query.find(:collection => 'books', :where => { :author => 'Seth Vargo' }, :results => 'prices')
+ISBNdb::Query.find(:collection => 'books', :where => { :isbn => '978-0-9776-1663-3' })
+ISBNdb::Query.find(:collection => 'books', :where => { :author => 'Seth Vargo' }, :results => 'prices')
 ```
 
 Options for `:collection` include **books**, **subjects**, **categories**, **authors**, and **publishers**.
@@ -56,7 +66,7 @@ Processing Results
 A `ResultSet` is nothing more than an enhanced array of `Result` objects. The easiest way to process results from Ruby ISBNdb is most easily done using the `.each` method.
 
 ```ruby
-results = @query.find_books_by_title("Agile Development")
+results = ISBNdb::Query.find_books_by_title("Agile Development")
 results.each do |result|
   puts "title: #{result.title}"
   puts "isbn10: #{result.isbn}"
@@ -82,10 +92,10 @@ because ISBNdb.com API is generally inconsistent with respect to returning empty
 
 Pagination
 ----------
-Ruby ISBNdb now include pagination! Pagination is based on the `ResultSet` object. The `ResultSet` object contains the methods `go_to_page`, `next_page`, and `prev_page`... Their function should not require too much explanation. Here's a basic example:
+Pagination is based on the `ResultSet` object. The `ResultSet` object contains the methods `go_to_page`, `next_page`, and `prev_page`... Their function should not require too much explanation. Here's a basic example:
 
 ```ruby
-results = @query.find_books_by_title("ruby")
+results = ISBNdb::Query.find_books_by_title("ruby")
 results.next_page.each do |result|
   puts "title: #{result.title}"
 end
@@ -94,7 +104,7 @@ end
 A more realistic example - getting **all** books of a certain title:
 
 ```ruby
-results = @query.find_books_by_title("ruby")
+results = ISBNdb::Query.find_books_by_title("ruby")
 while results
   results.each do |result|
     puts "title: #{title}"
@@ -109,7 +119,7 @@ It seems incredibly unlikely that a developer would ever use `prev_page`, but it
 Because there may be cases where a developer may need a specific page, the `go_to_page` method also exists. Consider an example where you batch-process books into your own database (which is probably against Copyright laws, but you don't seem to care...):
 
 ```ruby
-results = @query.find_books_by_title("ruby")
+results = ISBNdb::Query.find_books_by_title("ruby")
 results = results.go_to_page(50) # where 50 is the page number you want
 ```
 
@@ -119,28 +129,15 @@ results = results.go_to_page(50) # where 50 is the page number you want
 
 Advanced Key Management
 -----------------------
-With version 1.5.0, a new AccessKeySet allows for easy key management! It's controlled through the main @query.
-
-```ruby
-@access_key_set = @query.access_key_set
-
-@access_key_set.current_key                 # gets the current key
-@access_key_set.next_key                    # gets the next key
-@access_key_set.next_key!                   # advance the pointer (equivalent to @access_key_set.current_key = @access_key_set.next_key)
-@access_key_set.prev_key                    # gets the previous key
-@access_key_set.prev_key!                   # advance the pointer (equivalent to @access_key_set.current_key = @access_key_set.prev_key)
-@access_key_set.use_key('abc123foobar')     # use and existing key (or add it if doesn't exist)
-```
-
-All methods will return `nil` (except `use_key`) whenever the key does not exist.
+As over version 2.0, all access key management has moved into the `config/isbndb.yml` file. ISBNdb will auto-rollover if you specify multiple keys.
 
 Statistics
 ----------
 Ruby ISBNdb now supports basic statistics (from the server):
 
 ```ruby
-@query.keystats # => {:requests => 50, :granted => 49}
-@query.keystats[:granted] # => 49
+ISBNdb::Query.keystats # => {:requests => 50, :granted => 49}
+ISBNdb::Query.keystats[:granted] # => 49
 ```
 
 **Note**: Ironically, this information also comes from the server, so it counts as a request...
@@ -151,7 +148,6 @@ Ruby ISBNdb could raise the following possible exceptions:
 
 ```ruby
 ISBNdb::AccessKeyError
-ISBNdb::InvalidURIError
 ```
 
 You will most likely encounter `ISBNdb::AccessKeyError` when you have reached your 500-request daily limit. `ISBNdb::InvalidURIError` usually occurs when using magic finder methods with typographical errors.
@@ -169,7 +165,7 @@ def simliar
 
   @isbns.each do |isbn|
     begin
-      (@books ||= []) << @query.find_book_by_isbn(isbn).first
+      (@books ||= []) << ISBNdb::Query.find_book_by_isbn(isbn).first
     rescue ISBNdb::AccessKeyError
       SomeMailer.send_limit_email.deliver!
     end
@@ -192,12 +188,9 @@ Testing
 -------
 [![Build Status](http://travis-ci.org/sethvargo/isbndb.png)](http://travis-ci.org/sethvargo/isbndb)
 
-Know Bugs and Limitations
--------------------------
-- Result sets that return multiple sub-lists (like prices, pricehistory, and authors) are only populated with the *last* result
-
 Change Log
 ----------
+2012-6-17 - Released v2.0
 2011-3-11 - Officially changed from ruby_isbndb to isbndb with special thanks to [Terje Tjervaag](https://github.com/terje) for giving up the gem name :)
 
 Acknowledgments
