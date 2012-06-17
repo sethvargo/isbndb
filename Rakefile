@@ -3,4 +3,7 @@ require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+namespace :test do
+  desc 'Run tests against the CI'
+  task :ci => [:spec]
+end
