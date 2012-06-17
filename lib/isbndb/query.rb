@@ -6,19 +6,10 @@ module ISBNdb
     base_uri 'http://isbndb.com/api'
     headers 'Content-Type' => 'text/xml'
 
-    # Access methods of the access_key_set instance variable. This allows developers to manually
-    # advance, add, remove, and manage keys. See the AccessKeySet class for more information.
-    attr_reader :access_key_set
-
-    # This method sets an array of access_keys to use for making requests to the ISBNdb API.
-    def initialize(*access_keys)
-      @access_key_set = ISBNdb::AccessKeySet.new(access_keys)
-    end
-
     # This is the generic find method. It accepts a hash of parameters including :collection,
     # :where clauses, and :results to show. It builds the corresponding URI and sends that URI
     # off to the ResultSet for processing.
-    def find(params = {})
+    def self.find(params = {})
       raise 'No parameters specified! You must specify at least one parameter!' unless params[:where]
       raise 'params[:where] cannot be a String! It must be a Hash!' if params[:where].is_a?(String)
       raise 'params[:where] cannot be an Array! It must be a Hash!' if params[:where].is_a?(Array)
@@ -35,29 +26,29 @@ module ISBNdb
       end
 
       # make the request
-      uri = "/#{collection}.xml?access_key=#{@access_key_set.current_key}&results=#{results.join(',')}&#{searches.join('&')}"
+      uri = "/#{collection}.xml?access_key=#{access_key_set.current_key}&results=#{results.join(',')}&#{searches.join('&')}"
       ISBNdb::ResultSet.new(uri, collection)
     rescue ISBNdb::AccessKeyError
-      @access_key_set.next_key!
-      retry unless @access_key_set.current_key.nil?
-      raise ISBNdb::AccessKeyError
+      access_key_set.next_key!
+      retry unless access_key_set.current_key.nil?
+      raise
     end
 
     # This method returns keystats about your API key, including the number of requests
     # and the number of granted requets. Be advised that this request actually counts
     # as a request to the server, so use with caution.
-    def keystats
-      result = self.class.get("/books.xml?access_key=#{@access_key_set.current_key}&results=keystats")
+    def self.keystats
+      result = self.get("/books.xml?access_key=#{access_key_set.current_key}&results=keystats")
       result.parsed_response['ISBNdb']['KeyStats'] || {}
     end
 
     # Method missing allows for dynamic finders, similar to that of ActiveRecord. See
     # the README for more information on using magic finders.
-    def method_missing(m, *args, &block)
-      m = m.to_s.downcase
+    def self.method_missing(m, *args, &block)
+      method = m.to_s.downcase
 
-      if m.match(/find_(.+)_by_(.+)/)
-        split = m.split('_', 4)
+      if method.match(/find_(.+)_by_(.+)/)
+        split = method.split('_', 4)
         collection, search_strs = split[1].downcase.pluralize, [split.last]
 
         # check and see if we are searching multiple fields
@@ -75,8 +66,13 @@ module ISBNdb
     end
 
     # Pretty print the Query object with the access key.
-    def to_s
-      "#<ISBNdb::Query, @access_key=#{@access_key_set.current_key}>"
+    def self.to_s
+      "#<ISBNdb::Query, @access_key=#{access_key_set.current_key}>"
+    end
+
+    private
+    def self.access_key_set
+      @@access_key_set ||= ISBNdb::AccessKeySet.new
     end
   end
 end

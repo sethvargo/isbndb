@@ -40,7 +40,7 @@ module ISBNdb
     # Jump to a specific page. This method will return nil if the specified page does not exist.
     def go_to_page(page)
       get_total_pages unless @total_pages
-      return nil if page < 1 || page > @total_pages
+      return nil if page.to_i < 1 || page.to_i > @total_pages
       ISBNdb::ResultSet.new("#{@uri}&page_number=#{page}", @collection, page)
     end
 
@@ -56,7 +56,11 @@ module ISBNdb
 
     # Pretty prints the Result set information.
     def to_s
-      "#<ResultSet @collection=#{@collection}, total_results=#{@results.size}>"
+      "#<ResultSet::#{@collection} :total_results => #{@results.size}>"
+    end
+
+    def ==(result_set)
+      self.size == result_set.size && self.instance_variable_get('@results') == result_set.instance_variable_get('@results')
     end
 
     private

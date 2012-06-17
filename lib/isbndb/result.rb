@@ -35,6 +35,10 @@ module ISBNdb
       "#<Result #{@store.collect{ |key,value| ':' + key.to_s + ' => ' + value.inspect }.join(', ')}>"
     end
 
+    def ==(result)
+      self.inspect == result.inspect
+    end
+
     private
     def build_result(json)
       result = {}
