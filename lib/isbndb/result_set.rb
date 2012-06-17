@@ -18,7 +18,7 @@ module ISBNdb
     # Finally, this method then actually builds the ResultSet.
     def initialize(uri, collection, current_page = 1)
       @uri = uri
-      @collection = collection.titleize.singularize
+      @collection = collection.to_s.titleize.singularize
       @current_page = current_page
       @parsed_response = self.class.get(@uri).parsed_response['ISBNdb']
 

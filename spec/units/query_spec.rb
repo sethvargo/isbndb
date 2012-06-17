@@ -106,12 +106,7 @@ describe ISBNdb::Query do
   end
 
   context 'method_missing' do
-    context 'for a method it can handle' do
-      before do
-
-
-      end
-
+    context 'for a valid method it can handle' do
       it 'should work for books' do
         stub_request(:get, "http://isbndb.com/api/books.xml?access_key=ABC123&index1=title&results=details&value1=hello").to_return(:body => File.new('spec/responses/books_hello.xml'), :headers => {'Content-Type'=>'text/xml'})
 
@@ -194,6 +189,18 @@ describe ISBNdb::Query do
         @publisher.publisher_id.should == 'taylor_francis_a01'
         @publisher.name.should == ': Taylor & Francis'
         @publisher.details.should be_a(Hash)
+      end
+    end
+
+    context 'for an invalid method it can handle' do
+      it 'should throw an exception' do
+        lambda{ @query.find_foo_by_bar('totes') }.should raise_error
+      end
+    end
+
+    context 'for a method is can\'t handle' do
+      it 'should throw an exception' do
+        lambda{ @query.foo_bar }.should raise_error
       end
     end
   end

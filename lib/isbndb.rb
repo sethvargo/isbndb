@@ -8,6 +8,5 @@ module ISBNdb
   require 'isbndb/result'
 
   require 'core_extensions/string'
-  require 'core_extensions/symbol'
   require 'core_extensions/nil'
 end

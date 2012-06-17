@@ -9,7 +9,7 @@ module ISBNdb
   class Result
     # Initialize simply calls build_result. Because the method definition is recusive, it must
     # be moved into a separate helper.
-    def initialize(json)
+    def initialize(json = {})
       @store = build_result(json)
     end
 
@@ -32,7 +32,7 @@ module ISBNdb
     end
 
     def inspect
-      "#<Result #{@store.collect{ |key,value| ':' + key + ' => ' + value.inspect }.join(', ')}>"
+      "#<Result #{@store.collect{ |key,value| ':' + key.to_s + ' => ' + value.inspect }.join(', ')}>"
     end
 
     private
@@ -40,7 +40,7 @@ module ISBNdb
       result = {}
 
       json.each do |key,value|
-        result[key.underscore] = if value.is_a?(Hash)
+        result[key.to_s.underscore] = if value.is_a?(Hash)
           build_result(value)
         elsif value.blank?
           nil
