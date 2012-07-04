@@ -1,3 +1,4 @@
+require 'uri'
 module ISBNdb
   # The Query object is the most important class of the ISBNdb Module. It is the only public
   # class, and handles the processing power.
@@ -13,7 +14,6 @@ module ISBNdb
       raise 'No parameters specified! You must specify at least one parameter!' unless params[:where]
       raise 'params[:where] cannot be a String! It must be a Hash!' if params[:where].is_a?(String)
       raise 'params[:where] cannot be an Array! It must be a Hash!' if params[:where].is_a?(Array)
-
       collection = params[:collection] ||= :books
       results = params[:results] ||= :details
       results = [results].flatten
@@ -24,9 +24,9 @@ module ISBNdb
         searches << "index#{i+1}=#{key.to_s.strip}"
         searches << "value#{i+1}=#{val.to_s.strip}"
       end
-
       # make the request
-      uri = "/#{collection}.xml?access_key=#{access_key_set.current_key}&results=#{results.join(',')}&#{searches.join('&')}"
+      uri = base_uri+"/#{collection}.xml?access_key=#{access_key_set.current_key}&results=#{results.join(',')}&#{searches.join('&')}"
+      uri=URI.escape(uri)
       ISBNdb::ResultSet.new(uri, collection)
     rescue ISBNdb::AccessKeyError
       access_key_set.next_key!
