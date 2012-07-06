@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    isbndb (2.0.0)
+    isbndb (2.0.1)
       httparty (~> 0.8.3)
       rake (~> 0.9.2.2)
 
