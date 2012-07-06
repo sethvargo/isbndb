@@ -17,7 +17,7 @@ module ISBNdb
     # messages. An ISBNdb::AccessKeyError will be raised if the results contain any errors.
     # Finally, this method then actually builds the ResultSet.
     def initialize(uri, collection, current_page = 1)
-      @uri = uri
+      @uri = URI.escape(uri)
       @collection = collection.to_s.titleize.singularize
       @current_page = current_page
       @parsed_response = self.class.get(@uri).parsed_response['ISBNdb']
@@ -75,7 +75,7 @@ module ISBNdb
     # each child. This method works because the API always returns #{@collection}List followed by a subset
     # of #{@collection}Data. These results are all pushed into the @results array for accessing.
     def build_results
-      @results = @parsed_response["#{@collection}List"]["#{@collection}Data"].collect{ |json| Result.new(json) }
+      @results = (@parsed_response["#{@collection}List"]["#{@collection}Data"] || []).collect{ |json| Result.new(json) }
     end
 
     # This helper method is mainly designed for use with the go_to_page(page) method. It parses the XML

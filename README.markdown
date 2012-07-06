@@ -34,7 +34,7 @@ Where you list your access keys. This was in response to security holes in versi
 Now you're ready to get started:
 
 ```ruby
-@query = ISBNdb::Query.find_book_by_name('Ruby')
+@query = ISBNdb::Query.find_book_by_title('Ruby')
 ```
 
 ActiveRecord-like Usage
