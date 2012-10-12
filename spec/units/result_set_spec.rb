@@ -29,7 +29,7 @@ describe ISBNdb::ResultSet do
     end
   end
 
-  context '[0]' do
+  context '[]' do
     it 'should return the first result' do
       @result_set[0].should == @result_set.first
     end    
