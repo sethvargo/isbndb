@@ -31,10 +31,15 @@ module ISBNdb
     end
 
     # Because ResultSet extends Enumerable, we need to define the each method. This allows users
-    # to call methods like .first, .last, [5], and .each on the ResultSet, making it behave like
+    # to call methods like .first, .last, and .each on the ResultSet, making it behave like
     # a primitive array.
     def each(&block)
       @results.each &block
+    end
+
+    # Access via index
+    def [](i)
+      @results[i]
     end
 
     # Jump to a specific page. This method will return nil if the specified page does not exist.
