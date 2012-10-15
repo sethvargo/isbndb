@@ -29,6 +29,12 @@ describe ISBNdb::ResultSet do
     end
   end
 
+  context '[]' do
+    it 'should return the first result' do
+      @result_set[0].should == @result_set.first
+    end    
+  end
+
   context 'go_to_page' do
     it 'should get the total number of pages' do
       expect{ @result_set.go_to_page(1) }.to change { @result_set.instance_variable_get('@total_pages') }.to(167)
