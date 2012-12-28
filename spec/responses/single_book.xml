@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ISBNdb server_time="2012-06-16T20:10:13Z">
+<BookList total_results="1664" page_size="10" page_number="1" shown_results="1">
+<BookData book_id="100th_day_of_school_a04" isbn="1590543947" isbn13="9781590543948">
+<Title>100th Day of School</Title>
+<TitleLong>100th Day of School (Hello Reader Level 2)</TitleLong>
+<AuthorsText>Angela Shelf Medearis, </AuthorsText>
+<PublisherText publisher_id="fitzgerald_books">Fitzgerald Books</PublisherText>
+<Details change_time="2011-03-08T18:28:45Z" price_time="2012-05-29T16:45:46Z" edition_info="Unknown Binding; 2007-01" language="" physical_description_text="6.0&quot;x9.0&quot;x0.5&quot;; 0.4 lb; 32 pages" lcc_number="" dewey_decimal_normalized="" dewey_decimal="" />
+</BookData>
+</BookList>
+</ISBNdb>

@@ -80,7 +80,12 @@ module ISBNdb
     # each child. This method works because the API always returns #{@collection}List followed by a subset
     # of #{@collection}Data. These results are all pushed into the @results array for accessing.
     def build_results
-      @results = (@parsed_response["#{@collection}List"]["#{@collection}Data"] || []).collect{ |json| Result.new(json) }
+      result_json = @parsed_response["#{@collection}List"]["#{@collection}Data"]
+      if result_json.is_a?(Hash)  ## One result, typically from find_by_isbn
+        @results = [Result.new(result_json)]
+      else
+        @results = (result_json || []).collect{ |json| Result.new(json) }
+      end
     end
 
     # This helper method is mainly designed for use with the go_to_page(page) method. It parses the XML
