@@ -1,42 +1,6 @@
 require 'spec_helper'
 
 describe String do
-  context 'is_plural?' do
-    it 'should return true if the string is plural' do
-      'authors'.is_plural?.should be_true
-      'books'.is_plural?.should be_true
-      'subjects'.is_plural?.should be_true
-      'categories'.is_plural?.should be_true
-      'publishers'.is_plural?.should be_true
-    end
-
-    it 'should return false if the string is not plural' do
-      'author'.is_plural?.should_not be_true
-      'book'.is_plural?.should_not be_true
-      'subject'.is_plural?.should_not be_true
-      'category'.is_plural?.should_not be_true
-      'publisher'.is_plural?.should_not be_true
-    end
-  end
-
-  context 'is_singular?' do
-    it 'should return true if the string is singular' do
-      'author'.is_singular?.should be_true
-      'book'.is_singular?.should be_true
-      'subject'.is_singular?.should be_true
-      'category'.is_singular?.should be_true
-      'publisher'.is_singular?.should be_true
-    end
-
-    it 'should return false if the string is not singular' do
-      'authors'.is_singular?.should_not be_true
-      'books'.is_singular?.should_not be_true
-      'subjects'.is_singular?.should_not be_true
-      'categories'.is_singular?.should_not be_true
-      'publishers'.is_singular?.should_not be_true
-    end
-  end
-
   context 'titleize' do
     it 'should capitalize the first letter' do
       'author'.titleize.should == 'Author'

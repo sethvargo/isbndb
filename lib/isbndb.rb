@@ -1,5 +1,9 @@
 module ISBNdb
+  require 'active_support/all'
   require 'httparty'
+
+  require 'isbndb/models/base'
+  require 'isbndb/models/subject'
 
   require 'isbndb/access_key_set'
   require 'isbndb/exceptions'

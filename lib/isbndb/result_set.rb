@@ -61,7 +61,7 @@ module ISBNdb
 
     # Pretty prints the Result set information.
     def to_s
-      "#<ResultSet::#{@collection} :total_results => #{@results.size}>"
+      "#<ISBNdb::ResultSet::#{@collection} :total_results => #{@results.size}>"
     end
 
     def ==(result_set)

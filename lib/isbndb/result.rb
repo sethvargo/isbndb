@@ -28,11 +28,11 @@ module ISBNdb
     # Pretty print the Result including the number of singleton methods that exist. If
     # you want the ACTUAL singleton methods, call @result.singleton_methods.
     def to_s
-      "#<Result @num_singleton_methods=#{@store.size}>"
+      "#<ISBNdb::Result @num_singleton_methods=#{@store.size}>"
     end
 
     def inspect
-      "#<Result #{@store.collect{ |key,value| ':' + key.to_s + ' => ' + value.inspect }.join(', ')}>"
+      "#<ISBNdb::Result #{@store.collect{ |key,value| ':' + key.to_s + ' => ' + value.inspect }.join(', ')}>"
     end
 
     def ==(result)

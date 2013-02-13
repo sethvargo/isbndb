@@ -58,7 +58,7 @@ module ISBNdb
 
     # Pretty print the AccessKeySet
     def to_s
-      "#<AccessKeySet @keys=#{@access_keys.inspect}>"
+      "#<ISBNdb::AccessKeySet @keys=#{@access_keys.inspect}>"
     end
   end
 end

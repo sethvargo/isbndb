@@ -15,7 +15,7 @@ To get started, install the gem:
 Alternatively, you can add it to your Gemfile:
 
 ```ruby
-gem 'isbndb', '~> 2.0.0'
+gem 'isbndb', '~> 3.0.0'
 ```
 
 Basic Setup

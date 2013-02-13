@@ -3,7 +3,7 @@ SimpleCov.start
 
 require 'rspec'
 require 'shoulda'
-require 'webmock/rspec'
+# require 'webmoc/k/rspec'
 
 Dir[File.expand_path('spec/support/**/*.rb')].each { |f| require f }
 
