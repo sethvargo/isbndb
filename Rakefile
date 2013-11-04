@@ -3,7 +3,8 @@ require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
-namespace :test do
-  desc 'Run tests against the CI'
-  task :ci => [:spec]
+task :setup do
+  FileUtils.cp('config/isbndb.example.yml', 'config/isbndb.yml')
 end
+
+task default: [:setup, :spec]

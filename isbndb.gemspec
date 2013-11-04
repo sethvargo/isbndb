@@ -1,5 +1,5 @@
 # encoding: utf-8
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'isbndb'
@@ -15,11 +15,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency 'rspec', '~> 2.10.0'
-  s.add_development_dependency 'shoulda', '~> 3.0.1'
-  s.add_development_dependency 'simplecov', '~> 0.6.4'
-  s.add_development_dependency 'webmock', '~> 1.8.7'
+  # Runtime dependencies
+  s.add_runtime_dependency 'httparty',    '~> 0.12'
+  s.add_runtime_dependency 'rake'
 
-  s.add_runtime_dependency 'httparty', '~> 0.8.3'
-  s.add_runtime_dependency 'rake', '>= 0.9.2.2'
+  # Development dependencies
+  s.add_development_dependency 'rspec',   '~> 2.14'
+  s.add_development_dependency 'webmock', '~> 1.15'
 end

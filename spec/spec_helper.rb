@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-
 require 'rspec'
-require 'shoulda'
 require 'webmock/rspec'
 
 Dir[File.expand_path('spec/support/**/*.rb')].each { |f| require f }
