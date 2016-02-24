@@ -60,6 +60,11 @@ module ISBNdb
         search_strs.each_with_index { |str, i| searches[str.strip.to_sym] = args[i].strip }
 
         return find(:collection => collection, :where => searches)
+      elsif method.match(/find_(.+)_by/)
+        raise "Expect a single Hash argument." unless args[0].is_a?(Hash) && args.size == 1
+        collection = method.split('_',3)[1].pluralize
+
+        return find(collection: collection, where: args[0])
       end
 
       super
