@@ -48,6 +48,15 @@ ISBNdb::Query.find_author_by_name("Seth Vargo")
 ISBNdb::Query.find_publisher_by_name("Pearson")
 ```
 
+You can also use rails 4 dynamic finder style.
+
+```ruby
+ISBNdb::Query.find_book_by(isbn: "978-0-9776-1663-3")
+ISBNdb::Query.find_books_by(title: "Agile Development")
+ISBNdb::Query.find_author_by(name: "Seth Vargo")
+ISBNdb::Query.find_publisher_by(name: "Pearson")
+```
+
 Advanced Usage
 --------------
 Additionally, you can also use a more advanced syntax for complete control:
